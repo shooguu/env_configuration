@@ -7,7 +7,6 @@ export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:~/build-tools/TASKING_TriCore-VX-linux_v6.3r1/TriCore/ctc/bin
 export PATH=$PATH:~/hightec/bin
 export PATH=$PATH:/tools/Xilinx/Vivado/2019.1/bin
-export RLM_LICENSE=5053@hightec-dev-license.software.goriv.co
 export PATH=$PATH:~/bin
 export PATH=$PATH:/c/Users/snakamura/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 export PATH=$PATH:/c/Windows/System32
@@ -212,55 +211,3 @@ gpush()
 # git branch copy, copies any branch name from git branch
 alias gbc="git for-each-ref --format='%(refname:short)' refs/heads | fzf | pbcopy"
 
-# Function to create a new build
-startbuild()
-{
-    git for-each-ref --format='%(refname:short)' refs/heads | fzf | { read branch }
-
-    r1xdcc=0
-    spim=0
-    ascentdpim=0
-    packager=0
-
-    while [ True ]; do
-        if [ "$1" = "-d" ]; then
-            r1xdcc=1
-        elif [ "$1" = "-s" ]; then
-            spim=1
-        elif [ "$1" = "-a" ]; then
-            ascentdpim=1
-        elif [ "$1" = "-p" ]; then
-            packager=1
-            r1xdcc=0
-            spim=0
-            ascentdpim=0
-            break
-        else
-            break
-        fi
-        shift 1
-    done
-
-    curl --silent --fail --request POST --header "Content-Type: application/json" --header "PRIVATE-TOKEN: rivpat-zBEnE7ibBZ-3oWQHj-nm" "https://gitlab.goriv.co/api/v4/projects/3928/pipeline" --data @- <<EOF | jq -r '.web_url' ||  echo "GitLab API returned an error."
-    {
-        "ref": "$branch",
-        "variables": [
-        {
-            "key": "CI_DCC",
-            "value": "$r1xdcc"
-        },
-        {
-            "key": "CI_SPIM",
-            "value": "$spim"
-        },
-        {
-            "key": "CI_ASCENT_DPIM",
-            "value": "$ascentdpim"
-        },
-        {
-            "key": "CI_PACKAGER",
-            "value": "$packager"
-        }]
-    }
-EOF
-}
