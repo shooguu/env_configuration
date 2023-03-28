@@ -19,6 +19,7 @@ vim.keymap.set('n', "'r", ':cd ~/firmware<cr>', {})
 vim.keymap.set('n', "'p", ':cd ~/firmware/platform<cr>', {})
 vim.keymap.set('n', "'i", ':cd ~/firmware/interfaces<cr>', {})
 vim.keymap.set('n', "'t", ':cd ~/firmware/tools<cr>', {})
+vim.keymap.set('n', "'b", ':cd ~/firmware/build<cr>', {})
 
 ---------------------------------------------------------------
 -- => Custom commands
@@ -51,4 +52,3 @@ vim.cmd [[nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <
 
 -- highlight the visual selection after pressing enter.
 vim.cmd [[xnoremap <silent> <cr> "*y:silent! let searchTerm = '\V'.substitute(escape(@*, '\/'), "\n", '\\n', "g") <bar> let @/ = searchTerm <bar> echo '/'.@/ <bar> call histadd("search", searchTerm) <bar> set hls<cr>]]
-

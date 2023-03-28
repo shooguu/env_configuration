@@ -76,3 +76,9 @@ vim.o.termguicolors = true
 -- => Copy and paste
 ---------------------------------------------------------------
 vim.cmd [[set clipboard+=unnamedplus]]
+
+
+---------------------------------------------------------------
+-- => File configuration
+---------------------------------------------------------------
+vim.cmd [[filetype plugin indent off]]

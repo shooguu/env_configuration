@@ -20,8 +20,12 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+
+-- VSNIP
+Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/vim-vsnip-integ'
+
+-- Ripgrep
 Plug 'BurntSushi/ripgrep'
 
 -- Other themes
@@ -31,10 +35,6 @@ Plug 'romgrk/barbar.nvim'
 
 -- Color Scheme
 Plug 'EdenEast/nightfox.nvim'
-Plug 'folke/tokyonight.nvim'
-Plug 'mhartington/oceanic-next'
-Plug 'lewpoly/sherbet.nvim'
-Plug 'yazeed1s/minimal.nvim'
 
 -- Git
 Plug 'mhinz/vim-signify'

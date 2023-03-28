@@ -2,13 +2,19 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
+export PATH=$PATH:/opt/pclp
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:~/build-tools/TASKING_TriCore-VX-linux_v6.3r1/TriCore/ctc/bin
 export PATH=$PATH:~/hightec/bin
+export PATH=$PATH:/tools/Xilinx/Vivado/2019.1/bin
+export RLM_LICENSE=5053@hightec-dev-license.software.goriv.co
 export PATH=$PATH:~/bin
 export PATH=$PATH:/c/Users/snakamura/AppData/Local/Programs/Microsoft\ VS\ Code/bin
 export PATH=$PATH:/c/Windows/System32
 export PATH=$PATH:/c/win32yank-x64
+
+export COLUMNS
+export FZF_PREVIEW_COLUMNS
 
 # -------- PYENV --------
 export PATH="$HOME/.pyenv/bin:$PATH"
@@ -20,6 +26,13 @@ eval "$(pyenv virtualenv-init -)"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="oxide"
+
+# Creates new pane at same directory
+keep_current_path()
+{
+  printf "\e]9;9;%s\e\\" "$PWD"
+}
+precmd_functions+=(keep_current_path)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -81,7 +94,7 @@ ZSH_THEME="oxide"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting z copypath history fzf)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting z history fzf)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -117,7 +130,7 @@ alias vim="nvim"
 # -------- Exa --------
 alias ls="exa"
 alias ll="exa -alh"
-alias tree="exa ---tree"
+alias tree="exa --tree"
 
 # -------- Unit test --------
 alias testclean="setopt +o nomatch;
@@ -127,33 +140,40 @@ alias testclean="setopt +o nomatch;
                  setopt -o nomatch"
 
 # -------- Change directory --------
-alias ROOT="cd ~/firmware"
-alias PROJ="cd ~/firmware/ecu/propulsion/projects"
-alias TOOL="cd ~/firmware/tools"
-alias INT="cd ~/firmware/interfaces"
-alias DCC="cd ~/firmware/ecu/propulsion/projects/r1x_dcc"
-alias SPIM="cd ~/firmware/ecu/propulsion/projects/spim"
-alias ASC="cd ~/firmware/ecu/propulsion/projects/dpim/ascent_dpim"
-alias DEVK="cd ~/firmware/ecu/devkit"
+alias root="cd ~/firmware"
+alias plat="cd ~/firmware/platform"
+alias proj="cd ~/firmware/ecu/propulsion/projects"
+alias tool="cd ~/firmware/tools"
+alias int="cd ~/firmware/interfaces"
+alias dcc="cd ~/firmware/ecu/propulsion/projects/r1x_dcc"
+alias spim="cd ~/firmware/ecu/propulsion/projects/spim"
+alias asc="cd ~/firmware/ecu/propulsion/projects/dpim/ascent_dpim"
+alias devk="cd ~/firmware/ecu/devkit"
 
-alias SBPY="cd ~/sandbox/Python"
-alias SBC="cd ~/sandbox/C"
+alias sbpy="cd ~/sandbox/Python"
+alias sbc="cd ~/sandbox/C"
 
 # -------- Project related --------
-alias a="ROOT && source venv/bin/activate"
+alias a="root && source venv/bin/activate"
 alias d="deactivate"
+alias faultscript="python3 ~/firmware/ecu/propulsion/projects/r1x_dcc/scripts/FaultCodes/fault_codes.py"
+alias smudecode="python3 ~/firmware/ecu/propulsion/projects/r1x_dcc/scripts/smu_alarm_decoder/smu_alarm_decoder.py"
 
 # -------- Misc --------
 alias e="exit"
 alias c="clear"
+alias clsbuild="rm -rf ~/firmware/build"
 
-alias ZSHCONFIG="vim ~/.zshrc"
-alias VIMCONFIG="cd ~/.config/nvim"
+alias zshconfig="vim ~/.zshrc"
+alias vimconfig="cd ~/.config/nvim"
+alias lg="lazygit"
 
-# -------- LSP --------
-alias GETLOG="python3 ~/sandbox/Python/move_file/get_files.py log"
-alias GETART="python3 ~/sandbox/Python/move_file/get_files.py artifacts"
-alias INIT="GETLOG && python3 /home/snakamura/firmware/cdb.py -i /home/snakamura/firmware/build_log.log > /home/snakamura/firmware/compile_commands.json"
+alias freecachemem='sync && echo 3 | sudo tee /proc/sys/vm/drop_caches > /dev/null'
+
+# -------- lsp --------
+alias getlog="python3 ~/sandbox/Python/move_file/get_files.py log"
+alias getart="python3 ~/sandbox/Python/move_file/get_files.py artifacts"
+alias init="getlog && python3 /home/snakamura/firmware/cdb.py -i /home/snakamura/firmware/build_log.log > /home/snakamura/firmware/compile_commands.json"
 
 # -------- Git Alias --------
 alias gs="git status"
@@ -162,11 +182,85 @@ alias gb="git branch"
 # Git checkout via fzf
 alias gc="git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git checkout"
 
+# Git branch delete from list
+alias gbd="git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git branch -D "
+
 # git status copy, copies file name from git status
-alias gsc="git ls-files -m | fzf | tr -d '\n' | pbcopy"
+alias gsc="git ls-files --others --exclude-standard -m | fzf | tr -d '\n' | pbcopy"
 
 # copies current branch nane
-alias cb="git rev-parse --abbrev-ref HEAD | tr -d '\n' | pbcopy"
+alias cb="git branch --show-current | tr -d '\n' | pbcopy"
+
+# git pull origin (on current branch)
+gpull()
+{
+    git pull origin $(git branch --show-current)
+}
+
+# git checkout branch (user input)
+alias gcheck="git checkout "
+
+# git fetch origin (on current branch)
+alias gfetch="git fetch origin "
+
+# git push origin (on current branch)
+gpush()
+{
+    git push origin $(git branch --show-current)
+}
 
 # git branch copy, copies any branch name from git branch
 alias gbc="git for-each-ref --format='%(refname:short)' refs/heads | fzf | pbcopy"
+
+# Function to create a new build
+startbuild()
+{
+    git for-each-ref --format='%(refname:short)' refs/heads | fzf | { read branch }
+
+    r1xdcc=0
+    spim=0
+    ascentdpim=0
+    packager=0
+
+    while [ True ]; do
+        if [ "$1" = "-d" ]; then
+            r1xdcc=1
+        elif [ "$1" = "-s" ]; then
+            spim=1
+        elif [ "$1" = "-a" ]; then
+            ascentdpim=1
+        elif [ "$1" = "-p" ]; then
+            packager=1
+            r1xdcc=0
+            spim=0
+            ascentdpim=0
+            break
+        else
+            break
+        fi
+        shift 1
+    done
+
+    curl --silent --fail --request POST --header "Content-Type: application/json" --header "PRIVATE-TOKEN: rivpat-zBEnE7ibBZ-3oWQHj-nm" "https://gitlab.goriv.co/api/v4/projects/3928/pipeline" --data @- <<EOF | jq -r '.web_url' ||  echo "GitLab API returned an error."
+    {
+        "ref": "$branch",
+        "variables": [
+        {
+            "key": "CI_DCC",
+            "value": "$r1xdcc"
+        },
+        {
+            "key": "CI_SPIM",
+            "value": "$spim"
+        },
+        {
+            "key": "CI_ASCENT_DPIM",
+            "value": "$ascentdpim"
+        },
+        {
+            "key": "CI_PACKAGER",
+            "value": "$packager"
+        }]
+    }
+EOF
+}
