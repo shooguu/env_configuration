@@ -1,24 +1,6 @@
 -----------------------------------------------------------------
 ---- => Language Server Protocol
 -----------------------------------------------------------------
---vim.cmd([[
---if executable('clangd')
---    augroup lsp_clangd
---        autocmd!
---        autocmd User lsp_setup call lsp#register_server({
---                    \ 'name': 'clangd',
---                    \ {'cmd': {server_info->['clangd']}, '--background-index'},
---                    \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
---                    \ 'compilationDatabaseDirectory' = '/home/snakamura/.lsp_config',
---                    \ })
---        autocmd FileType c setlocal omnifunc=lsp#complete
---        autocmd FileType cpp setlocal omnifunc=lsp#complete
---        autocmd FileType objc setlocal omnifunc=lsp#complete
---        autocmd FileType objcpp setlocal omnifunc=lsp#complete
---    augroup end
---endif
---]])
-
 require("nvim-lsp-installer").setup {}
 
 -- Set up nvim-cmp.
@@ -72,9 +54,6 @@ cmp.setup.cmdline(':', {
 })
 
 local on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
     -- Mappings.
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     local bufopts = { noremap=true, silent=true, buffer=bufnr }
@@ -82,7 +61,6 @@ local on_attach = function(client, bufnr)
     vim.keymap.set('n', 'gD', vim.lsp.buf.definition, bufopts)
     vim.keymap.set('n', '<C-h>', vim.lsp.buf.hover, bufopts)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, bufopts)
-    vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', bufopts)
 end
 
 local cmd = {

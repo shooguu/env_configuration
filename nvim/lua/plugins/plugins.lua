@@ -16,12 +16,12 @@ Plug 'williamboman/nvim-lsp-installer'
 
 -- CMP
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
 
--- VSNIP
+-- For vsnip users.
 Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/vim-vsnip'
 
@@ -35,6 +35,7 @@ Plug 'romgrk/barbar.nvim'
 
 -- Color Scheme
 Plug 'EdenEast/nightfox.nvim'
+Plug('hardhackerlabs/theme-vim', { ['as'] = 'hardhacker' })
 
 -- Git
 Plug 'mhinz/vim-signify'
@@ -46,10 +47,8 @@ Plug 'danymat/neogen'
 Plug 'Jorengarenar/miniSnip'
 
 -- Telescope
-Plug 'nvim-lua/plenary.nvim'
-Plug('nvim-telescope/telescope.nvim', { ['tag']= '0.1.0' })
+Plug('nvim-telescope/telescope.nvim', { ['tag']= '0.1.x' })
 Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
-Plug 'BurntSushi/ripgrep'
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'liuchengxu/vista.vim'
 
