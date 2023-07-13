@@ -47,8 +47,11 @@ vim.o.mat = 2
 -- show 6 lines below/above cursor at all times
 vim.o.scrolloff = 6
 
---set encodign to utf-8
+-- set encodign to utf-8
 vim.o.encoding = "utf-8"
+
+-- create history buffer allowing you to undo after buffer is closed
+vim.o.undofile = true
 
 ---------------------------------------------------------------
 -- => Text, tab and indent related
@@ -76,7 +79,6 @@ vim.o.termguicolors = true
 -- => Copy and paste
 ---------------------------------------------------------------
 vim.cmd [[set clipboard+=unnamedplus]]
-
 
 ---------------------------------------------------------------
 -- => File configuration

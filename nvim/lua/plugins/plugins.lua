@@ -1,65 +1,74 @@
 ---------------------------------------------------------------
 -- => Plugins
 ---------------------------------------------------------------
-local api = vim.api
-local Plug = vim.fn['plug#']
-vim.call('plug#begin', '~/.config/nvim/plugged')
+return require('packer').startup(function(use)
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
--- Fuzzy Finder
-Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
-Plug 'junegunn/fzf.vim'
+    -- Fuzzy Finder
+    use('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
+    use 'junegunn/fzf.vim'
 
--- LSP / Tree
-Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+    -- LSP / Tree
+    use 'nvim-treesitter/nvim-treesitter'
+    use 'neovim/nvim-lspconfig'
+    use 'williamboman/nvim-lsp-installer'
 
--- CMP
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
+    -- CMP
+    use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-cmdline'
+    use 'hrsh7th/nvim-cmp'
+    use 'hrsh7th/cmp-buffer'
+    use 'hrsh7th/cmp-path'
 
--- For vsnip users.
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
+    -- For vsnip users.
+    use 'hrsh7th/cmp-vsnip'
+    use 'hrsh7th/vim-vsnip'
 
--- Ripgrep
-Plug 'BurntSushi/ripgrep'
+    -- Ripgrep
+    use 'BurntSushi/ripgrep'
 
--- Other themes
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
-Plug 'romgrk/barbar.nvim'
+    -- Other themes
+    use 'nvim-lualine/lualine.nvim'
+    use 'kyazdani42/nvim-web-devicons'
+    use 'romgrk/barbar.nvim'
 
--- Color Scheme
-Plug 'EdenEast/nightfox.nvim'
-Plug('hardhackerlabs/theme-vim', { ['as'] = 'hardhacker' })
+    -- Color Scheme
+    use 'EdenEast/nightfox.nvim'
 
--- Git
-Plug 'mhinz/vim-signify'
+    -- Git
+    use 'mhinz/vim-signify'
 
--- Misc
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'dstein64/vim-win'
-Plug 'danymat/neogen'
-Plug 'Jorengarenar/miniSnip'
+    -- Misc
+    use 'ntpeters/vim-better-whitespace'
+    use 'dstein64/vim-win'
+    use 'danymat/neogen'
+    use 'Jorengarenar/miniSnip'
 
--- Telescope
-Plug('nvim-telescope/telescope.nvim', { ['tag']= '0.1.x' })
-Plug('nvim-telescope/telescope-fzf-native.nvim', { ['do'] = 'make' })
-Plug 'nvim-telescope/telescope-file-browser.nvim'
-Plug 'liuchengxu/vista.vim'
+    -- Telescope
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.2',
+        requires = {
+            {'nvim-lua/plenary.nvim'}
+        }
+    }
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+    }
+    use 'nvim-telescope/telescope-file-browser.nvim'
+    use 'liuchengxu/vista.vim'
 
--- Lightspeed
-Plug 'ggandor/lightspeed.nvim'
+    -- Lightspeed
+    use 'ggandor/lightspeed.nvim'
 
--- diffview
-Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim'
+    -- Plenary
+    use 'nvim-lua/plenary.nvim'
 
--- git blame
-Plug 'f-person/git-blame.nvim'
+    -- diffview
+    use 'sindrets/diffview.nvim'
 
-vim.call('plug#end')
+    -- git blame
+    use 'f-person/git-blame.nvim'
+
+end)

@@ -1,0 +1,9 @@
+/**
+ * @file    <{!substitute(expand('%:t'), '\.c', '\.h', '')}>
+ * @brief	Function prototypes
+ */
+
+#ifndef <{!substitute(toupper(substitute(expand('%:t'), '\.c', '\.h', '')), '\.H', '\_H', '')}>
+#define <{~2}>
+
+#endif /* <{~1}> */
