@@ -1,40 +1,9 @@
 ---------------------------------------------------------------
 -- => Plugins
 ---------------------------------------------------------------
---local api = vim.api local Plug = vim.fn['plug#'] vim.call('plug#begin', '~/.config/nvim/plugged') -- Fuzzy Finder Plug('junegunn/fzf', {['do'] = vim.fn['fzf#install']}) Plug 'junegunn/fzf.vim' -- LSP / Tree Plug 'nvim-treesitter/nvim-treesitter' Plug 'neovim/nvim-lspconfig' Plug 'williamboman/nvim-lsp-installer' -- CMP Plug 'hrsh7th/cmp-nvim-lsp' Plug 'hrsh7th/cmp-cmdline' Plug 'hrsh7th/nvim-cmp' Plug 'hrsh7th/cmp-buffer' Plug 'hrsh7th/cmp-path' -- For vsnip users. Plug 'hrsh7th/cmp-vsnip' Plug 'hrsh7th/vim-vsnip' -- Ripgrep Plug 'BurntSushi/ripgrep' -- Other themes Plug 'nvim-lualine/lualine.nvim' Plug 'kyazdani42/nvim-web-devicons' Plug 'romgrk/barbar.nvim' -- Color Scheme Plug 'EdenEast/nightfox.nvim'
---Plug('hardhackerlabs/theme-vim', { ['as'] = 'hardhacker' })
---
----- Git
---Plug 'mhinz/vim-signify'
---
----- Misc
---Plug 'ntpeters/vim-better-whitespace'
---Plug 'dstein64/vim-win'
---Plug 'danymat/neogen'
---Plug 'Jorengarenar/miniSnip'
---
----- Telescope
---Plug('nvim-telescope/telescope.nvim', { ['tag']= '0.1.x' })
---Plug('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'})
---Plug 'nvim-telescope/telescope-file-browser.nvim'
---Plug 'liuchengxu/vista.vim'
---
----- Lightspeed
---Plug 'ggandor/lightspeed.nvim'
---
----- Plenary
---Plug 'nvim-lua/plenary.nvim'
---
----- diffview
---Plug 'sindrets/diffview.nvim'
---
----- git blame
---Plug 'f-person/git-blame.nvim'
---
---vim.call('plug#end')
-
-
 return require('packer').startup(function(use)
+    -- Packer can manage itself
+    use 'wbthomason/packer.nvim'
 
     -- Fuzzy Finder
     use('junegunn/fzf', {['do'] = vim.fn['fzf#install']})
@@ -66,33 +35,70 @@ return require('packer').startup(function(use)
 
     -- Color Scheme
     use 'EdenEast/nightfox.nvim'
-    use('hardhackerlabs/theme-vim', { ['as'] = 'hardhacker' })
 
     -- Git
     use 'mhinz/vim-signify'
 
     -- Misc
-    use 'ntpeters/vim-better-whitespace'
-    use 'dstein64/vim-win'
+    -- use 'ntpeters/vim-better-whitespace'
+    -- use 'dstein64/vim-win'
     use 'danymat/neogen'
     use 'Jorengarenar/miniSnip'
 
+    -- Plenary
+    use 'nvim-lua/plenary.nvim'
+
     -- Telescope
-    use('nvim-telescope/telescope.nvim', { ['tag']= '0.1.x' })
-    use('nvim-telescope/telescope-fzf-native.nvim', {['do'] = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'})
+    use {
+        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        requires = {
+            {'nvim-lua/plenary.nvim'}
+        }
+    }
+
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
+    }
+
     use 'nvim-telescope/telescope-file-browser.nvim'
     use 'liuchengxu/vista.vim'
 
     -- Lightspeed
-    use 'ggandor/lightspeed.nvim'
-
-    -- Plenary
-    use 'nvim-lua/plenary.nvim'
+    -- use 'ggandor/lightspeed.nvim'
 
     -- diffview
     use 'sindrets/diffview.nvim'
 
     -- git blame
     use 'f-person/git-blame.nvim'
+
+    -- Markdown viewer
+    -- install without yarn or npm
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+    })
+
+    -- language packs for vim
+    use 'sheerun/vim-polyglot'
+
+    -- notes
+    use 'backdround/global-note.nvim'
+
+    -- detour (with keymap configuration)
+    use({
+        'carbon-steel/detour.nvim',
+        config = function ()
+            vim.keymap.set('n', '<c-w>.', ":Detour<cr>")
+            vim.keymap.set('n', '<c-w><enter>', ":DetourCurrentWindow<cr>")
+        end
+    })
+
+    -- directory change telescope
+    use 'zane-/cder.nvim'
+
+    -- markdown
+    -- use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 
 end)

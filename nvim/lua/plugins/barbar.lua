@@ -2,7 +2,7 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Set barbar's options
-require'bufferline'.setup {
+require('bufferline').setup {
   -- Sets the maximum padding width with which to surround each tab
   maximum_padding = 1,
 

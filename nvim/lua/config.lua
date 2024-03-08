@@ -2,8 +2,8 @@
 -- => VIM user interface
 ---------------------------------------------------------------
 -- Color scheme for SCons
-vim.cmd [[au BufRead,BufNewFile SContruct set filetype=python]]
-vim.cmd [[au BufRead,BufNewFile SConscript set filetype=python]]
+vim.cmd("au BufRead,BufNewFile SContruct set filetype=python")
+vim.cmd("au BufRead,BufNewFile SConscript set filetype=python")
 
 -- Start searching before pressing enter
 vim.o.incsearch = true
@@ -12,10 +12,11 @@ vim.o.incsearch = true
 vim.o.hlsearch = true
 
 -- Enable mouse input
-vim.cmd [[set mouse=a]]
+vim.cmd("set mouse=a")
 
 -- Enable line number
-vim.cmd [[set nu rnu]]
+-- vim.cmd [[set nu rnu]]
+vim.wo.number = true
 
 -- Set window title
 vim.o.title = true
@@ -27,7 +28,7 @@ vim.o.showcmd = true
 vim.o.hid = true
 
 -- configure backspace so it acts as it should act
-vim.cmd [[set whichwrap+=<,>,h,l]]
+vim.cmd("set whichwrap+=<,>,h,l")
 
 -- ignore case when searching
 vim.o.ignorecase = true
@@ -52,6 +53,12 @@ vim.o.encoding = "utf-8"
 
 -- create history buffer allowing you to undo after buffer is closed
 vim.o.undofile = true
+
+
+---------------------------------------------------------------
+-- => Polyglot configuration
+---------------------------------------------------------------
+vim.cmd("let g:polyglot_disabled = ['c', 'c++', 'python', 'lua']")
 
 ---------------------------------------------------------------
 -- => Text, tab and indent related
@@ -78,10 +85,9 @@ vim.o.termguicolors = true
 ---------------------------------------------------------------
 -- => Copy and paste
 ---------------------------------------------------------------
-vim.cmd [[set clipboard+=unnamedplus]]
+vim.cmd("set clipboard+=unnamedplus")
 
 ---------------------------------------------------------------
 -- => File configuration
 ---------------------------------------------------------------
-vim.cmd [[filetype plugin indent off]]
-
+vim.cmd("filetype plugin indent off")
