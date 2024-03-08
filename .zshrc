@@ -2,36 +2,27 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export PATH=$PATH:/opt/pclp
-export ZSH=$HOME/.oh-my-zsh
-export PATH=$PATH:~/build-tools/TASKING_TriCore-VX-linux_v6.3r1/TriCore/ctc/bin
-export PATH=$PATH:~/hightec/bin
-export PATH=$PATH:/tools/Xilinx/Vivado/2019.1/bin
-export PATH=$PATH:~/bin
-export PATH=$PATH:/c/Users/snakamura/AppData/Local/Programs/Microsoft\ VS\ Code/bin
-export PATH=$PATH:/c/Windows/System32
-export PATH=$PATH:/c/win32yank-x64
+export ZSH="$HOME/.oh-my-zsh"
 
-export COLUMNS
-export FZF_PREVIEW_COLUMNS
+# Install theme if not installed
+if [ ! -f ~/.oh-my-zsh/themes/oxide.zsh-theme ]; then
+    (cd ~/.oh-my-zsh/themes && curl -O "https://raw.githubusercontent.com/dikiaap/dotfiles/master/.oh-my-zsh/themes/oxide.zsh-theme")
+fi
 
-# -------- PYENV --------
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# Install plugins if not installed
+if [ ! -d $ZSH/custom/plugins/zsh-syntax-highlighting ]; then
+    (git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting)
+fi
+
+if [ ! -d $ZSH/custom/plugins/zsh-autosuggestions ]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+fi
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="oxide"
-
-# Creates new pane at same directory
-keep_current_path()
-{
-  printf "\e]9;9;%s\e\\" "$PWD"
-}
-precmd_functions+=(keep_current_path)
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -93,7 +84,7 @@ precmd_functions+=(keep_current_path)
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting z history fzf)
+plugins=(git fd copypath zsh-autosuggestions zsh-syntax-highlighting z)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -123,91 +114,17 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# -------  nvim --------
+# Pyenv configuration
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# LSD
+alias ls="lsd"
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+
+# Neovim
 alias vim="nvim"
-
-# -------- Exa --------
-alias ls="exa"
-alias ll="exa -alh"
-alias tree="exa --tree"
-
-# -------- Unit test --------
-alias testclean="setopt +o nomatch;
-                 rm -rf /home/snakamura/firmware/tools/unit_testing_env/build;
-                 rm -rf /home/snakamura/firmware/tools/unit_testing_env/reports;
-                 rm -f /home/snakamura/firmware/build_*;
-                 setopt -o nomatch"
-
-# -------- Change directory --------
-alias root="cd ~/firmware"
-alias plat="cd ~/firmware/platform"
-alias proj="cd ~/firmware/ecu/propulsion/projects"
-alias tool="cd ~/firmware/tools"
-alias int="cd ~/firmware/interfaces"
-alias dcc="cd ~/firmware/ecu/propulsion/projects/r1x_dcc"
-alias spim="cd ~/firmware/ecu/propulsion/projects/spim"
-alias asc="cd ~/firmware/ecu/propulsion/projects/dpim/ascent_dpim"
-alias devk="cd ~/firmware/ecu/devkit"
-
-alias sbpy="cd ~/sandbox/Python"
-alias sbc="cd ~/sandbox/C"
-
-# -------- Project related --------
-alias a="root && source venv/bin/activate"
-alias d="deactivate"
-alias faultscript="python3 ~/firmware/ecu/propulsion/projects/r1x_dcc/scripts/FaultCodes/fault_codes.py"
-alias smudecode="python3 ~/firmware/ecu/propulsion/projects/r1x_dcc/scripts/smu_alarm_decoder/smu_alarm_decoder.py"
-
-# -------- Misc --------
-alias e="exit"
-alias c="clear"
-alias clsbuild="rm -rf ~/firmware/build"
-
-alias zshconfig="vim ~/.zshrc"
-alias vimconfig="cd ~/.config/nvim"
-alias lg="lazygit"
-
-alias freecachemem='sync && echo 3 | sudo tee /proc/sys/vm/drop_caches > /dev/null'
-
-# -------- lsp --------
-alias getlog="python3 ~/sandbox/Python/move_file/get_files.py log"
-alias getart="python3 ~/sandbox/Python/move_file/get_files.py artifacts"
-alias init="getlog && python3 /home/snakamura/firmware/cdb.py -i /home/snakamura/firmware/build_log.log > /home/snakamura/firmware/compile_commands.json"
-
-# -------- Git Alias --------
-alias gs="git status"
-alias gb="git branch"
-
-# Git checkout via fzf
-alias gc="git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git checkout"
-
-# Git branch delete from list
-alias gbd="git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git branch -D "
-
-# git status copy, copies file name from git status
-alias gsc="git ls-files --others --exclude-standard -m | fzf | tr -d '\n' | pbcopy"
-
-# copies current branch nane
-alias cb="git branch --show-current | tr -d '\n' | pbcopy"
-
-# git pull origin (on current branch)
-gpull()
-{
-    git pull origin $(git branch --show-current)
-}
-
-# git checkout branch (user input)
-alias gcheck="git checkout "
-
-# git fetch origin (on current branch)
-alias gfetch="git fetch origin "
-
-# git push origin (on current branch)
-gpush()
-{
-    git push origin $(git branch --show-current)
-}
-
-# git branch copy, copies any branch name from git branch
-alias gbc="git for-each-ref --format='%(refname:short)' refs/heads | fzf | pbcopy"
-
