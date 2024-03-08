@@ -1,45 +1,39 @@
----------------------------------------------------------------
--- => Telescope
----------------------------------------------------------------
-vim.api.nvim_create_user_command('FF', 'Telescope find_files', {})
-vim.api.nvim_create_user_command('FG', 'Telescope live_grep', {})
-vim.api.nvim_create_user_command('FS', 'Telescope grep_string', {})
-vim.api.nvim_create_user_command('FB', 'Telescope buffers', {})
-vim.api.nvim_create_user_command('CD', 'Telescope cder', {})
+return
+{
+    {
+        'nvim-telescope/telescope.nvim',
+        tag = '0.1.5',
+        dependencies = { 'nvim-lua/plenary.nvim' },
+        config = function()
+            -- Key Mappings
+            vim.api.nvim_create_user_command('FF', 'Telescope find_files', {})
+            vim.api.nvim_create_user_command('FG', 'Telescope live_grep', {})
+            vim.api.nvim_create_user_command('FS', 'Telescope grep_string', {})
+            vim.api.nvim_create_user_command('FB', 'Telescope buffers', {})
 
-require('telescope').setup{
-    extensions = {
-        cder = {
-            previewer_command =
-                'exa '..
-                '-a '..
-                '--color=always '..
-                '-T '..
-                '--level=3 '..
-                '--icons '..
-                '--git-ignore '..
-                '--long '..
-                '--no-permissions '..
-                '--no-user '..
-                '--no-filesize '..
-                '--git '..
-                '--ignore-glob=.git',
-            dir_command = { 'fd', '--type=d', '.', os.getenv("PWD") },
-        },
+            require('telescope').setup {
+            pickers = {
+                find_files = {
+                no_ignore = true
+                }
+            },
+            defaults = {
+                path_display = { truncate = 2 }
+            },
+            }
+        end,
     },
-    pickers = {
-        find_files = {
-            no_ignore = true
-        }
+    { 
+        'nvim-telescope/telescope-fzf-native.nvim',
+    	build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+        config = function()
+            require('telescope').load_extension('fzf')
+        end,
     },
-    defaults = {
-        --path_display={"smart"} 
-        path_display = { truncate = 2 }
+    {
+        'nvim-telescope/telescope-file-browser.nvim',
+        config = function()
+            require('telescope').load_extension('file_browser')
+        end,
     },
 }
-
----- Telescope plugins
-require('telescope').load_extension('fzf')
-require('telescope').load_extension('file_browser')
-require('telescope').load_extension('cder')
-

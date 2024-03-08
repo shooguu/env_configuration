@@ -1,0 +1,9 @@
+return
+{
+    {
+        "mhinz/vim-signify",
+    },
+    {
+        "f-person/git-blame.nvim",
+    }
+}

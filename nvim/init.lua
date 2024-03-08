@@ -1,18 +1,18 @@
-require('plugins')
-require('config')
-require('custom_commands')
-require('keybindings')
-require('theme')
-require('plugins/barbar')
-require('plugins/diffview')
-require('plugins/gitblame')
-require('plugins/globalnote')
-require('plugins/lsp')
-require('plugins/minisnip')
-require('plugins/neogen')
-require('plugins/signify')
-require('plugins/telescope')
-require('plugins/treesitter')
-require('plugins/vimwin')
-require('plugins/vista')
-require('plugins/whitespace')
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require("lazy").setup("plugins")
+
+-- Load configurations
+require("config/keybinding")
+require("config/options")

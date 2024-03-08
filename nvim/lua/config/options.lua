@@ -1,10 +1,6 @@
 ---------------------------------------------------------------
 -- => VIM user interface
 ---------------------------------------------------------------
--- Color scheme for SCons
-vim.cmd("au BufRead,BufNewFile SContruct set filetype=python")
-vim.cmd("au BufRead,BufNewFile SConscript set filetype=python")
-
 -- Start searching before pressing enter
 vim.o.incsearch = true
 
@@ -53,12 +49,6 @@ vim.o.encoding = "utf-8"
 
 -- create history buffer allowing you to undo after buffer is closed
 vim.o.undofile = true
-
-
----------------------------------------------------------------
--- => Polyglot configuration
----------------------------------------------------------------
-vim.cmd("let g:polyglot_disabled = ['c', 'c++', 'python', 'lua']")
 
 ---------------------------------------------------------------
 -- => Text, tab and indent related
