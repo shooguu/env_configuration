@@ -4,27 +4,35 @@ return
         'nvim-telescope/telescope.nvim',
         tag = '0.1.5',
         dependencies = { 'nvim-lua/plenary.nvim' },
+        keys = {
+            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files" },
+            { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
+            { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "find files" },
+            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "find files" },
+        },
         config = function()
-            -- Key Mappings
-            vim.api.nvim_create_user_command('FF', 'Telescope find_files', {})
-            vim.api.nvim_create_user_command('FG', 'Telescope live_grep', {})
-            vim.api.nvim_create_user_command('FS', 'Telescope grep_string', {})
-            vim.api.nvim_create_user_command('FB', 'Telescope buffers', {})
-
             require('telescope').setup {
-            pickers = {
-                find_files = {
-                no_ignore = true
-                }
-            },
-            defaults = {
-                path_display = { truncate = 2 }
-            },
+                pickers = {
+                    find_files = {
+                        no_ignore = true
+                    }
+                },
+                defaults = {
+                    path_display = {
+                        truncate = 2
+                    }
+                },
             }
         end,
     },
     { 
         'nvim-telescope/telescope-fzf-native.nvim',
+        keys = {
+            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files" },
+            { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
+            { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "find files" },
+            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "find files" },
+        },
     	build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
         config = function()
             require('telescope').load_extension('fzf')
@@ -32,6 +40,12 @@ return
     },
     {
         'nvim-telescope/telescope-file-browser.nvim',
+        keys = {
+            { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "find files" },
+            { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "find files" },
+            { "<leader>fs", "<cmd>Telescope grep_string<cr>", desc = "find files" },
+            { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "find files" },
+        },
         config = function()
             require('telescope').load_extension('file_browser')
         end,

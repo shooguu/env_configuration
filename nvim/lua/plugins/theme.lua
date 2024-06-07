@@ -3,12 +3,19 @@ return
    {
         -- Nightfox theme
         'EdenEast/nightfox.nvim',
-        lazy = false,
+        priority = 1000,
         config = function()
             require('nightfox').setup {
                 options = {
-                transparent = true
-                }
+                    transparent = true,
+                },
+                groups = {
+                    nightfox = {
+                        WinSeparator =  {
+                            fg = "#71839b",
+                        }
+                    }
+                },
             }
             vim.cmd('colorscheme nightfox')
         end,
@@ -16,11 +23,10 @@ return
     {
         -- Lualine
         'nvim-lualine/lualine.nvim',
-        lazy = false,
         config = function()
             require('lualine').setup {
                 options = {
-                theme = 'nightfox'
+                    theme = 'material'
                 }
             }
         end,

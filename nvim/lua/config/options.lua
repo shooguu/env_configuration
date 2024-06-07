@@ -1,83 +1,90 @@
 ---------------------------------------------------------------
 -- => VIM user interface
 ---------------------------------------------------------------
+-- Disable nvim intro message
+vim.opt.shortmess:append("I")
+
 -- Start searching before pressing enter
-vim.o.incsearch = true
+vim.opt.incsearch = true
 
 -- Highlight search words
-vim.o.hlsearch = true
+vim.opt.hlsearch = true
 
 -- Enable mouse input
-vim.cmd("set mouse=a")
+vim.opt.mouse:append("a")
 
 -- Enable line number
--- vim.cmd [[set nu rnu]]
-vim.wo.number = true
+vim.opt.relativenumber = true
+vim.opt.number = true
 
 -- Set window title
-vim.o.title = true
+vim.opt.title = true
 
 -- incomplete commands
-vim.o.showcmd = true
+vim.opt.showcmd = true
 
 -- a buffer becomes hidden when it is abandoned
-vim.o.hid = true
+vim.opt.hid = true
 
 -- configure backspace so it acts as it should act
-vim.cmd("set whichwrap+=<,>,h,l")
+-- vim.cmd("set whichwrap+=<,>,h,l")
+vim.opt.backspace = "indent,eol,start"
 
 -- ignore case when searching
-vim.o.ignorecase = true
+vim.opt.ignorecase = true
 
 -- when searching try to be smart about cases
-vim.o.smartcase = true
+vim.opt.smartcase = true
 
 -- don't redraw while executing macros (good performance config)
-vim.o.lazyredraw = true
+vim.opt.lazyredraw = true
 
 -- show matching brackets when text indicator is over them
-vim.o.showmatch = true
+vim.opt.showmatch = true
 
 -- how many tenths of a second to blink when matching brackets
-vim.o.mat = 2
+vim.opt.mat = 2
 
 -- show 6 lines below/above cursor at all times
-vim.o.scrolloff = 6
+vim.opt.scrolloff = 6
 
 -- set encodign to utf-8
-vim.o.encoding = "utf-8"
+vim.opt.encoding = "utf-8"
 
 -- create history buffer allowing you to undo after buffer is closed
-vim.o.undofile = true
+vim.opt.undofile = true
+
+-- Words with '-' will be treated as a single word
+vim.opt.iskeyword:append("-")
 
 ---------------------------------------------------------------
 -- => Text, tab and indent related
 ---------------------------------------------------------------
 -- 1 tab == 4 spaces
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
--- use spcaes instead of tabs
-vim.o.expandtab = true
+-- use spaces instead of tabs
+vim.opt.expandtab = true
 
 -- auto indent
-vim.o.ai = true
+vim.opt.ai = true
 
 -- smart indent
-vim.o.si = true
+vim.opt.si = true
 
 -- wrap lines
-vim.o.wrap = true
+vim.opt.wrap = true
 
 -- Enable termguicolors
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 ---------------------------------------------------------------
 -- => Copy and paste
 ---------------------------------------------------------------
-vim.cmd("set clipboard+=unnamedplus")
+vim.opt.clipboard:append("unnamedplus")
 
 ---------------------------------------------------------------
 -- => File configuration
 ---------------------------------------------------------------
-vim.cmd("filetype plugin indent off")
+-- vim.cmd("filetype plugin indent off")

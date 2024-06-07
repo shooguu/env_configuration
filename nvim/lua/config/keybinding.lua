@@ -19,3 +19,6 @@ vim.cmd [[nnoremap <silent> <cr> :let searchTerm = '\v<'.expand("<cword>").'>' <
 vim.cmd("command! CRP call setreg('+', expand('%'))")
 vim.cmd("command! CAP call setreg('+', expand('%:p'))")
 vim.cmd("command! CFN call setreg('+', expand('%:t'))")
+
+-- Modify minisnip keymapping
+vim.cmd("let g:miniSnip_trigger = '<c-s>'")

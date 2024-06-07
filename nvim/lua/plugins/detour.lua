@@ -2,9 +2,10 @@ return
 {
     {
         'carbon-steel/detour.nvim',
-        config = function ()
-            vim.keymap.set('n', '<c-w>.', ":Detour<cr>")
-            vim.keymap.set('n', '<c-w><enter>', ":DetourCurrentWindow<cr>")
-        end
+        keys = {
+            { "<c-w>.", "<cmd>Detour<cr>", desc = "Detour" },
+            { "<c-w><enter>", "<cmd>DetourCurrentWindow<cr>", desc = "Detour" },
+        }
     },
 }
+
