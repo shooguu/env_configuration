@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Export gitlab token
-export GITLAB_TOKEN=rivpat-HHCEUzbZxxknmKmvmCP6
+export GITLAB_TOKEN=""
 
 # --------------------------------------------------- #
 # ------------------ Export Trace32 ----------------- #
