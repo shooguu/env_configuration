@@ -1,6 +1,9 @@
 ---------------------------------------------------------------
 -- => VIM user interface
 ---------------------------------------------------------------
+-- Change leader key to space
+vim.g.mapleader= " "
+
 -- Disable nvim intro message
 vim.opt.shortmess:append("I")
 
@@ -16,6 +19,7 @@ vim.opt.mouse:append("a")
 -- Enable line number
 vim.opt.relativenumber = true
 vim.opt.number = true
+vim.opt.statuscolumn = "%s %l %r "
 
 -- Set window title
 vim.opt.title = true
@@ -57,6 +61,16 @@ vim.opt.undofile = true
 -- Words with '-' will be treated as a single word
 vim.opt.iskeyword:append("-")
 
+-- Explorer tree style view
+vim.g.netrw_liststyle = "3"
+
+-- Add sign column to prevent text shift
+vim.opt.signcolumn = "yes"
+
+-- Active window will switch to new split window when split
+vim.opt.splitright = true
+vim.opt.splitbelow = true
+
 ---------------------------------------------------------------
 -- => Text, tab and indent related
 ---------------------------------------------------------------
@@ -71,7 +85,7 @@ vim.opt.expandtab = true
 vim.opt.ai = true
 
 -- smart indent
-vim.opt.si = true
+-- vim.opt.si = true
 
 -- wrap lines
 vim.opt.wrap = true
@@ -87,4 +101,4 @@ vim.opt.clipboard:append("unnamedplus")
 ---------------------------------------------------------------
 -- => File configuration
 ---------------------------------------------------------------
--- vim.cmd("filetype plugin indent off")
+vim.cmd("filetype plugin indent off")
