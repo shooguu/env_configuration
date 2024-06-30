@@ -9,6 +9,10 @@ return
             	ensure_installed = { "c", "lua", "cpp", "python", "vimdoc" },
             	-- Install parsers synchronously
                 build = ":TSUpdate",
+                indent = {
+                    enable = true,
+                    disable = { "python", "lua" }
+                }
             }
     	end,
     }

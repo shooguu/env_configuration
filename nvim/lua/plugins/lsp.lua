@@ -27,7 +27,7 @@ return
                         "clangd",
                         "--clang-tidy",
                         "--background-index",
-                        "--cross-file-rename",
+                        --"--cross-file-rename",
 
                         --[[
                         "clangd",
